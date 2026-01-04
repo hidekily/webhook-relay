@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+.button-login{
+    height: 55px;
+    width: 55px;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50px;
+    cursor: pointer;
+
+    margin-bottom: 5%;
+}
+
+.google{
+    background-image: url('/google.png');
+}
+
+.discord{
+    background-image: url('/discord.png');
+}
+
+.github{
+    background-image: url('/github.png');
+}
