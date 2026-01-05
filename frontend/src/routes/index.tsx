@@ -7,12 +7,12 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
 
-  const callRedirectURL = window.location.origin + "/console/dashboard";
+  const getRedirectURL = () => window.location.origin + "/console/dashboard";
 
   const handleLoginGoogle = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
-      callbackURL: callRedirectURL,
+      callbackURL: getRedirectURL(),
     });
 
     if(data.error){
@@ -23,8 +23,9 @@ function RouteComponent() {
 
   const handleLoginDiscord = async () => {
     const data = await authClient.signIn.social({
+
       provider: "discord",
-      callbackURL: callRedirectURL,
+      callbackURL: getRedirectURL(),
     });
 
     console.log("teste")
@@ -38,7 +39,7 @@ function RouteComponent() {
   const handleLoginGithub = async () => {
     const data = await authClient.signIn.social({
       provider: "github",
-      callbackURL: callRedirectURL,
+      callbackURL: getRedirectURL(),
     });
 
     console.log("hi")

@@ -12,6 +12,6 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "../shared/src/db/schema.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
