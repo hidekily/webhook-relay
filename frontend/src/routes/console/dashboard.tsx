@@ -7,7 +7,9 @@ export const Route = createFileRoute('/console/dashboard')({
 function RouteComponent() {
   return(
     <>
-    
+      <div className='bg-zinc-800 h-full w-full flex justify-center items-center'>
+
+      </div>
     </>
   )
 }

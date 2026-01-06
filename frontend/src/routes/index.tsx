@@ -1,11 +1,24 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import {authClient} from '../lib/auth-client'
+import { useState, useEffect } from 'react';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
 })
 
+
 function RouteComponent() {
+
+  const [session, setSession] = useState<any>(null);
+  
+  async function fetchSession() {
+    const {data} = await authClient.getSession();
+    setSession(data);
+  }
+
+  useEffect(() => {
+    fetchSession();
+  }, []);
 
   const getRedirectURL = () => window.location.origin + "/console/dashboard";
 
@@ -41,8 +54,6 @@ function RouteComponent() {
       provider: "github",
       callbackURL: getRedirectURL(),
     });
-
-    console.log("hi")
 
     if(data.error){
       alert(data.error.message)
