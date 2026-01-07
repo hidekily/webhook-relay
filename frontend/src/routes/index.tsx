@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, Navigate } from '@tanstack/react-router'
 import {authClient} from '../lib/auth-client'
 import { useState, useEffect } from 'react';
 
@@ -9,16 +9,23 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
 
-  const [session, setSession] = useState<any>(null);
-  
-  async function fetchSession() {
-    const {data} = await authClient.getSession();
-    setSession(data);
-  }
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  useEffect(() => {
-    fetchSession();
-  }, []);
+  const handleSignIn = async () => {
+    const { data, error } = await authClient.signIn.email({
+      email,
+      password,
+      callbackURL: 'http://localhost:3000/console/dashboard',
+    })
+
+    if (error) {
+      alert('Erro: ' + error.message)
+    } else {
+      alert('Login realizado!')
+      Navigate({ to: '/console/dashboard' })
+    }
+  }
 
   const getRedirectURL = () => window.location.origin + "/console/dashboard";
 
@@ -61,36 +68,53 @@ function RouteComponent() {
     }
   };
 
+  
+
 
   return (
     <div className='bg-zinc-800 h-full w-full flex justify-center items-center'>
-      <section className="h-[80%] w-[35%] border-1 border-red-500 rounded-lg 
+      <section className="h-[85%] w-[35%] border-1 border-red-500 rounded-lg 
                           flex flex-col bg-zinc-900/50 shadow-2xl shadow-red-500 items-center gap-6"
       >
         {/* section for email login */}
-        <section className="flex flex-col gap-5 mt-10 h-[70%] w-[80%] justify-center items-center">
-          <input
+        <section className="flex flex-col gap-5 mt-10 h-[85%] w-[80%] justify-center">
+          <span className='flex justify-self-start text-red-700'>
+            Email
+          </span>
+
+          <input 
             type="email"
-            placeholder="Email"
-            className='input-login w-full bg-red-900 rounded-md h-14 text-center text-white'
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className='input-login w-full bg-red-900 rounded-md h-14 text-center text-white'
+            placeholder='example@gmail.com' 
+            className='bg-red-900/50 h-[12%] w-full rounded-md mb-2 text-white' 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          <div className="flex flex-row justify-center items-center gap-4 mt-4">
-            <button className='text-white rounded-md h-20 w-20 bg-red-900'>Login</button>
-            <span className='text-red-800 text-3xl'>|</span>
-            <Link to="/register" className="flex justify-center items-center text-white rounded-md h-20 w-20 bg-red-900">Register</Link>
-          </div>
+          <span className='flex justify-self-start text-red-700'>
+            Password
+          </span>
+
+          <input 
+            type="password"
+            placeholder='Insert your password' 
+            className='bg-red-900/50 h-[12%] w-full rounded-md text-white'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <input type="submit" value="Login" 
+                 className='bg-red-800/70 h-[12%] w-full rounded-md text-white' 
+                  onClick={handleSignIn}
+          />
+          <Link to="/register" className='text-white underline flex justify-center mt-2'>
+            Don't have an account? Register here!
+          </Link>
         </section>
 
         <hr className="w-full border-red-700"/>
 
         {/* section for login buttons */}
-        <section className="flex flex-row justify-center items-center gap-15 h-[30%]">
+        <section className="flex flex-row justify-center items-center gap-15 h-[15%]">
           <button onClick={handleLoginGoogle} className='button-login google'></button>
           <button onClick={handleLoginDiscord} className='button-login discord'></button>
           <button onClick={handleLoginGithub} className='button-login github'></button>

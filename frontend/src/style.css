@@ -24,3 +24,12 @@
 .github{
     background-image: url('/github.png');
 }
+
+.register-input{
+    height: 40px;
+    width: 300px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin-bottom: 15px;
+}

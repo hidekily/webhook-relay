@@ -16,6 +16,13 @@ app.register(cors, {
 app.all('/api/auth/*', async (request, reply) => {
   // Converte a requisição Fastify para Web Request
   const url = new URL(request.url, `http://${request.headers.host}`)
+
+  let bodyText = undefined
+  if (request.method !== 'GET' && request.method !== 'HEAD') {
+    // Se já tem body parseado, converte de volta para string
+    bodyText = JSON.stringify(request.body)
+  }
+
   
   const webRequest = new Request(url.toString(), {
     method: request.method,
@@ -29,6 +36,8 @@ app.all('/api/auth/*', async (request, reply) => {
 
   // Passa para o better-auth processar
   const response = await auth.handler(webRequest)
+
+    
 
   // Converte a Web Response de volta para Fastify
   reply.status(response.status)
