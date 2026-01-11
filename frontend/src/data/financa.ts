@@ -1,15 +1,11 @@
 import { z } from 'zod';
 
-// Definimos o schema de UM item
 const DataItemSchema = z.object({
   name: z.string(),
   caixa: z.number().min(1),
 });
 
-// Definimos o schema da LISTA (que é o que o Recharts usa)
 const DataListSchema = z.array(DataItemSchema);
-
-// Exemplo de dados vindos de uma API ou variável
 
 const valor = 1000.50;
 
@@ -46,5 +42,4 @@ const rawData = [
     { name: '30', caixa: valor },
 ];
 
-// Validamos a lista completa
 export const validatedData = DataListSchema.parse(rawData);

@@ -1,6 +1,6 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import {validatedData} from '../data/financa'
-// #endregion
+
 export const Example = () => {
   return (
     <div style={{ minWidth: '0' ,width: '80%', height: '80%'}}>

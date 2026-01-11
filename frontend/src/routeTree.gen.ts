@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MenuRouteImport } from './routes/menu'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsolePedidosRouteImport } from './routes/console/pedidos'
 import { Route as ConsoleFinancaRouteImport } from './routes/console/financa'
 import { Route as ConsoleDashboardRouteImport } from './routes/console/dashboard'
 
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConsoleRoute = ConsoleRouteImport.update({
   id: '/console',
   path: '/console',
@@ -44,6 +50,7 @@ const ConsoleDashboardRoute = ConsoleDashboardRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
+  '/menu': typeof MenuRoute
   '/console/dashboard': typeof ConsoleDashboardRoute
   '/console/financa': typeof ConsoleFinancaRoute
   '/console/pedidos': typeof ConsolePedidosRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
+  '/menu': typeof MenuRoute
   '/console/dashboard': typeof ConsoleDashboardRoute
   '/console/financa': typeof ConsoleFinancaRoute
   '/console/pedidos': typeof ConsolePedidosRoute
@@ -59,6 +67,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/console': typeof ConsoleRouteWithChildren
+  '/menu': typeof MenuRoute
   '/console/dashboard': typeof ConsoleDashboardRoute
   '/console/financa': typeof ConsoleFinancaRoute
   '/console/pedidos': typeof ConsolePedidosRoute
@@ -68,6 +77,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/console'
+    | '/menu'
     | '/console/dashboard'
     | '/console/financa'
     | '/console/pedidos'
@@ -75,6 +85,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/console'
+    | '/menu'
     | '/console/dashboard'
     | '/console/financa'
     | '/console/pedidos'
@@ -82,6 +93,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/console'
+    | '/menu'
     | '/console/dashboard'
     | '/console/financa'
     | '/console/pedidos'
@@ -90,10 +102,18 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConsoleRoute: typeof ConsoleRouteWithChildren
+  MenuRoute: typeof MenuRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/console': {
       id: '/console'
       path: '/console'
@@ -150,6 +170,7 @@ const ConsoleRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConsoleRoute: ConsoleRouteWithChildren,
+  MenuRoute: MenuRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -8,7 +8,6 @@ import tailwindcss from '@tailwindcss/vite'
 const config = defineConfig({
   plugins: [
     devtools(),
-    // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
